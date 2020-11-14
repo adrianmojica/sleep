@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import SleepForm from './SleepForm';
+import { BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import Results from './Results';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+
+          <Route exact path="/">
+            <SleepForm/>
+          </Route>
+
+          <Route path="/results">
+              <Results/>
+          </Route>
+        
+          <Route>
+            <p>Hmmm. I can't seem to find what you want.</p>
+          </Route>
+
+        </Switch>    
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
+
