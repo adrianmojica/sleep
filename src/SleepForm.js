@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
+import {useHistory} from 'react-router';
 import './SleepForm.css';
 
  
 
-function SleepForm() {
+function SleepForm(props) {
 
   let hours = ["00:00","00:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00",
               "4:30","5:00","5:30","6:00","6:30","7:00","7:30",
@@ -20,8 +22,11 @@ function SleepForm() {
     durationSleep:""
   })
 
+  const [sleepScore, setSleepScore] = useState();
+
+
+
   function handleChange(evt) {
-    console.log(evt.target.name);
     const value = evt.target.value;
     setState({
       ...state,
@@ -31,17 +36,18 @@ function SleepForm() {
 
   function handleSubmit(evt){
     evt.preventDefault();
-    console.log(state);
     getSleepCalc();
+    
   }
 
   async function getSleepCalc() {
-    const response = await axios ({
-    url: "http://localhost:5000/calc",
-    method: "GET"
-  })
-  
-  console.log(response.data)
+    const response = await axios.post("http://localhost:5000/calc",state); 
+    console.log(response);
+    if(response.data.status === "OK"){
+      console.log('here', response.data.sleepScore);
+      setSleepScore(response.data.sleepScore);
+      
+    }
   }
 
   let submitButton;
