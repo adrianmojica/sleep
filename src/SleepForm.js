@@ -2,6 +2,9 @@ import React, {useState, useEffect} from "react";
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import {useHistory} from 'react-router';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import logo from './logo.png';
 import './SleepForm.css';
 
  
@@ -24,6 +27,14 @@ function SleepForm(props) {
 
   const [sleepScore, setSleepScore] = useState();
 
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+
+
+  function handleClose(){
+    setShow(false);
+  }
 
 
   function handleChange(evt) {
@@ -33,6 +44,7 @@ function SleepForm(props) {
       [evt.target.name]: value
     });
   }
+
 
   function handleSubmit(evt){
     evt.preventDefault();
@@ -46,7 +58,7 @@ function SleepForm(props) {
     if(response.data.status === "OK"){
       console.log('here', response.data.sleepScore);
       setSleepScore(response.data.sleepScore);
-      
+      handleShow();
     }
   }
 
@@ -56,52 +68,67 @@ function SleepForm(props) {
   }
 
   return (
+    <>
+      <img className="logo" src={logo} alt={"logo"}/>
+      <div className="container">
+        <div className="row">
+          <div className="col">
 
-    <div className="container">
-      <div className="row">
-        <div className="col">
-
-        </div>
-        <div className="col-5">
-          <div className="sleep-form">
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">Sleep Score</h5>
-                    <p className="card-text">Please answer these questions to get your Sleep Score.</p>
-                    <form className="sleep-form-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="name">Name:</label>
-                        <input type="text" className="form-control" id="name" name="name" placeholder="Name" onChange={handleChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="durationBed">Duration in bed:</label>
-                        <select className="form-control" id="durationBed" name="durationBed" onChange={handleChange}>
-                          {hours.map(function(segment, i){
-                            return <option key={segment}>{segment} Hours</option>
-                          })}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="durationSleep">Duration in asleep:</label>
-                        <select className="form-control" id="durationSleep" name="durationSleep" onChange={handleChange}>
-                          {hours.map(function(segment, i){
-                            return <option key={segment}>{segment} Hours</option>
-                          })}
-                        </select>
-                    </div>
-                    <div className="submit-button">
-                      {submitButton}
-                    </div>
-                    </form>
-                </div>
+          </div>
+          <div className="col-5">
+            <div className="sleep-form">
+              <div className="card">
+                  <div className="card-body">
+                      <p className="card-text">Please answer these questions to get your Sleep Score.</p>
+                      <form className="sleep-form-form" onSubmit={handleSubmit}>
+                      <div className="form-group">
+                          <label htmlFor="name">Name:</label>
+                          <input type="text" className="form-control" id="name" name="name" placeholder="Name" onChange={handleChange}/>
+                      </div>
+                      <div className="form-group">
+                          <label htmlFor="durationBed">Duration in bed:</label>
+                          <select className="form-control" id="durationBed" name="durationBed" onChange={handleChange}>
+                            {hours.map(function(segment, i){
+                              return <option key={segment}>{segment} Hours</option>
+                            })}
+                          </select>
+                      </div>
+                      <div className="form-group">
+                          <label htmlFor="durationSleep">Duration asleep:</label>
+                          <select className="form-control" id="durationSleep" name="durationSleep" onChange={handleChange}>
+                            {hours.map(function(segment, i){
+                              return <option key={segment}>{segment} Hours</option>
+                            })}
+                          </select>
+                      </div>
+                      <div className="submit-button">
+                        {submitButton}
+                      </div>
+                      </form>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col">
+          <div className="col">
 
+          </div>
         </div>
       </div>
-    </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+            <div><h3>{state.name}'s Sleep Score is:</h3></div>
+        </Modal.Header>
+        <Modal.Body>
+          
+          <div className="score"><h3>{sleepScore}</h3></div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 

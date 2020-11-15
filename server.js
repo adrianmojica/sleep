@@ -20,17 +20,14 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 // create a GET route
 app.post('/calc', (req, res) => {
     let score = calculateSleep(req.body);
-    console.log("*****", score);
     res.send({ status: 'OK', sleepScore: score });
 });
 
 
 function calculateSleep(data){
-    console.log(data);
     let bed = (getSleepValues(data.durationBed));
     let sleep =(getSleepValues(data.durationSleep));
     let score = (100*(sleep/bed));
-    console.log(score);
     return score;
 }
 

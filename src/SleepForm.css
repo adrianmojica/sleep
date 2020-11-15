@@ -1,7 +1,10 @@
-
+.logo {
+    width:200px;
+    margin-top:50px;
+}
 
 .sleep-form {
-    margin-top:100px;
+    margin-top:50px;
 
 }
 
@@ -11,4 +14,12 @@
 
 .submit-button {
     text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.score {
+    color: rgb(68, 55, 182);
 }

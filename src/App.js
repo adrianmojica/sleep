@@ -3,20 +3,16 @@ import './App.css';
 import SleepForm from './SleepForm';
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import Results from './Results';
 
 function App() {
   return (
     <div className="App">
+      
       <BrowserRouter>
         <Switch>
 
           <Route exact path="/">
             <SleepForm/>
-          </Route>
-
-          <Route path="/results">
-            <Results/>
           </Route>
         
           <Route>
