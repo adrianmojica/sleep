@@ -14,8 +14,6 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json()); 
 
-// console.log that your server is up and running
-app.listen(port, () => console.log(`Listening on port ${port}`));
 
 // create a GET route
 app.post('/calc', (req, res) => {
@@ -44,3 +42,5 @@ function getSleepValues(value){
     let valueC = parseFloat(valueA)+parseFloat(valueB);
     return valueC;
 }
+
+module.exports = app;
